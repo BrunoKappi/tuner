@@ -1,6 +1,6 @@
 {
   "tuner": {
-    "title": "GuitarTune",
+    "title": "Bkappi Tuner",
     "subtitle": "Afinador Online de Alta Precisão",
     "microphone": {
       "start": "Iniciar Afinador",
@@ -19,6 +19,12 @@
         "weak": "Sinal fraco",
         "good": "Bom sinal"
       }
+    },
+    "layouts": {
+      "title": "Visualização",
+      "analog": "Agulha",
+      "meter": "Velocímetro",
+      "strobe": "Estroboscópio"
     },
     "instruments": {
       "title": "Selecione o Instrumento",

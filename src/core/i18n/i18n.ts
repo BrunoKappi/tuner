@@ -7,6 +7,9 @@ const resources = {
   'pt-BR': {
     translation: ptBRTranslations,
   },
+  'pt': {
+    translation: ptBRTranslations,
+  },
   en: {
     translation: enTranslations,
   },

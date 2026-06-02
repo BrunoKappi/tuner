@@ -1,6 +1,6 @@
 {
   "tuner": {
-    "title": "GuitarTune",
+    "title": "Bkappi Tuner",
     "subtitle": "High-Precision Online Tuner",
     "microphone": {
       "start": "Start Tuner",
@@ -19,6 +19,12 @@
         "weak": "Weak signal",
         "good": "Good signal"
       }
+    },
+    "layouts": {
+      "title": "Visualization",
+      "analog": "Needle",
+      "meter": "Speedometer",
+      "strobe": "Strobe"
     },
     "instruments": {
       "title": "Select Instrument",

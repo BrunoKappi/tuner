@@ -4,6 +4,7 @@ import type { RootState } from '../../../core/store/Store';
 import {
   setMicrophoneState,
   setMuted,
+  setLayout,
 } from '../store/Tuner.Slice';
 import type { PitchData, SignalLevel } from '../types/Tuner.Types';
 import AudioProcessor from '../services/Tuner.AudioProcessor';
@@ -15,6 +16,7 @@ export const useTuner = () => {
   const selectedInstrumentKey = useSelector((state: RootState) => state.tuner.selectedInstrumentKey);
   const microphoneState = useSelector((state: RootState) => state.tuner.microphoneState);
   const isMuted = useSelector((state: RootState) => state.tuner.isMuted);
+  const selectedLayout = useSelector((state: RootState) => state.tuner.selectedLayout);
 
   // Referência persistente e isolada do processador Web Audio
   const processorRef = useRef<AudioProcessor | null>(null);
@@ -96,6 +98,10 @@ export const useTuner = () => {
     await startTuner();
   };
 
+  const changeLayout = (layout: 'analog' | 'meter' | 'strobe') => {
+    dispatch(setLayout(layout));
+  };
+
   // Garante liberação de hardware de áudio ao desmontar a página
   useEffect(() => {
     return () => {
@@ -103,6 +109,29 @@ export const useTuner = () => {
         processorRef.current.cleanup();
       }
     };
+  }, []);
+
+  // Inicialização Automática caso o microfone já tenha sido concedido no passado
+  useEffect(() => {
+    const checkPermissionAndAutoStart = async () => {
+      if (typeof navigator !== 'undefined' && navigator.permissions && navigator.permissions.query) {
+        try {
+          const status = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+          if (status.state === 'granted') {
+            await startTuner();
+          }
+          
+          status.onchange = async () => {
+            if (status.state === 'granted') {
+              await startTuner();
+            }
+          };
+        } catch (err) {
+          // Silencia falhas sob navegadores incompatíveis
+        }
+      }
+    };
+    checkPermissionAndAutoStart();
   }, []);
 
   // Monitora alterações de silenciamento gerais
@@ -128,10 +157,12 @@ export const useTuner = () => {
     microphoneState,
     selectedInstrumentKey,
     isMuted,
+    selectedLayout,
     signalLevel: getSignalLevel(),
     startTuner,
     toggleMute,
     restartTuner,
+    changeLayout,
   };
 };
 

@@ -1,6 +1,6 @@
-# 🎸 GuitarTune - Afinador Cromático Online de Alta Precisão
+# 🎸 Bkappi Tuner - Afinador Cromático Online de Alta Precisão
 
-**GuitarTune** é uma aplicação web moderna de alto desempenho focada exclusivamente na afinação rápida e intuitiva de instrumentos de corda, com suporte otimizado para **Violão**, **Guitarra** e **Baixo**.
+**Bkappi Tuner** é uma aplicação web moderna de alto desempenho focada exclusivamente na afinação rápida e intuitiva de instrumentos de corda, com suporte otimizado para **Violão**, **Guitarra** e **Baixo**.
 
 O projeto funciona **100% no navegador**, executado inteiramente de forma local (offline) no dispositivo do usuário, sem necessidade de instalações, cadastro ou envio de dados de áudio para servidores externos.
 

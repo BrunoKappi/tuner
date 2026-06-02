@@ -48,7 +48,7 @@ export const TunerInstrumentSelector: React.FC<TunerInstrumentSelectorProps> = (
               }`}
             >
               {getIcon(inst.key)}
-              <span className="truncate">{t(inst.nameKey)}</span>
+              <span>{t(inst.nameKey)}</span>
             </button>
           );
         })}

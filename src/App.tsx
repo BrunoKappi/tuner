@@ -14,7 +14,7 @@ function App() {
 
         {/* Rodapé Minimalista */}
         <footer className="text-center text-[9px] uppercase font-black tracking-widest text-slate-600 mt-8 select-none">
-          © {new Date().getFullYear()} GuitarTune • Offline HTML5 Instrument Tuner
+          © {new Date().getFullYear()} Bkappi Tuner • Offline HTML5 Instrument Tuner
         </footer>
       </div>
     </Provider>
