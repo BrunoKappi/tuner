@@ -51,23 +51,13 @@ export const TunerCard: React.FC = () => {
     }
   }, []);
 
-  // Estado de tema local síncrono para garantir atualização instantânea da UI
-  const [localTheme, setLocalTheme] = useState<'dark' | 'light'>(selectedTheme || 'dark');
-
-  // Sincroniza o tema local com o Redux Store caso seja alterado externamente
-  useEffect(() => {
-    if (selectedTheme) {
-      setLocalTheme(selectedTheme);
-    }
-  }, [selectedTheme]);
-
-  // Monitora e aplica a classe de tema claro/escuro nos nós html e body
+  // Monitora e aplica a classe de tema claro/escuro nos nós html e body diretamente com base no estado do Redux
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const html = window.document.documentElement;
       const body = window.document.body;
-      console.log('Bkappi Tuner applying theme class:', localTheme);
-      if (localTheme === 'dark') {
+      console.log('Bkappi Tuner applying theme class:', selectedTheme);
+      if (selectedTheme === 'dark') {
         html.classList.add('dark');
         body.classList.add('dark');
       } else {
@@ -75,7 +65,7 @@ export const TunerCard: React.FC = () => {
         body.classList.remove('dark');
       }
     }
-  }, [localTheme]);
+  }, [selectedTheme]);
 
   const acceptCookies = () => {
     if (typeof window !== 'undefined') {
@@ -85,7 +75,7 @@ export const TunerCard: React.FC = () => {
   };
 
   const toggleTheme = () => {
-    const nextTheme = localTheme === 'dark' ? 'light' : 'dark';
+    const nextTheme = selectedTheme === 'dark' ? 'light' : 'dark';
     
     // Aplicar síncrono imediato para garantia visual absoluta
     if (typeof window !== 'undefined') {
@@ -100,7 +90,6 @@ export const TunerCard: React.FC = () => {
       }
     }
     
-    setLocalTheme(nextTheme);
     changeTheme(nextTheme);
   };
 
@@ -154,7 +143,7 @@ export const TunerCard: React.FC = () => {
             className="text-slate-500 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white transition-colors duration-300 focus:outline-none flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-100/70 dark:hover:bg-slate-800/40"
             aria-label="Mudar Tema"
           >
-            {localTheme === 'dark' ? (
+            {selectedTheme === 'dark' ? (
               <Sun className="w-3.5 h-3.5 animate-pulse pointer-events-none" />
             ) : (
               <Moon className="w-3.5 h-3.5 pointer-events-none" />

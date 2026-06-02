@@ -2,6 +2,19 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <!-- Script de Inicialização Síncrona do Tema para evitar flashes -->
+    <script>
+      (function() {
+        try {
+          const theme = localStorage.getItem('bkappi_tuner_theme') || 'dark';
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/x-icon" href="/icon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bkappi Tuner - Afinador Online para Violão e Guitarra</title>
