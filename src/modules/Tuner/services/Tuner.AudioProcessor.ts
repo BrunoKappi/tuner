@@ -39,9 +39,9 @@ export class AudioProcessor {
       
       this.mediaStream = await navigator.mediaDevices.getUserMedia({
         audio: {
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: false, // Desabilitado para precisão perfeita de frequência
+          echoCancellation: false, // Desabilitado para evitar cancelamentos de fase de cordas de violão/guitarra
+          noiseSuppression: false, // Desabilitado para evitar portas de ruído que abafam sons acústicos contínuos
+          autoGainControl: true,   // Habilitado para aumentar a sensibilidade de sons mais baixos em celulares
         },
       });
 

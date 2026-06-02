@@ -48,8 +48,8 @@ export const AUDIO_CONFIG = {
   fftSize: 2048,
   clarityThreshold: 0.85,
   rmsThresholds: {
-    none: 0.003,
-    weak: 0.012,
+    none: 0.001, // Baixado de 0.003 para detecção instantânea de vibrações muito silenciosas
+    weak: 0.005, // Baixado de 0.012 para resposta superior a sons suaves no celular
   },
   smoothingFactor: 0.08, // Média móvel exponencial mais forte para agulha suave
 };
