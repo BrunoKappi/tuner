@@ -1,0 +1,54 @@
+{
+  "tuner": {
+    "title": "GuitarTune",
+    "subtitle": "High-Precision Online Tuner",
+    "microphone": {
+      "start": "Start Tuner",
+      "mute": "Mute Tuner",
+      "unmute": "Unmute Tuner",
+      "reset": "Reset Tuner",
+      "denied": "Microphone Access Denied",
+      "denied_description": "This tuner needs access to your microphone to identify the played notes.",
+      "try_again": "Try again",
+      "incompatible": "Incompatible Browser",
+      "incompatible_description": "Your browser does not support the audio capture required for this tuner.",
+      "connecting": "Requesting microphone access...",
+      "signals": {
+        "title": "Input",
+        "none": "No signal",
+        "weak": "Weak signal",
+        "good": "Good signal"
+      }
+    },
+    "instruments": {
+      "title": "Select Instrument",
+      "chromatic": "Chromatic",
+      "acoustic_guitar": "Acoustic Guitar",
+      "guitar": "Electric Guitar",
+      "bass": "Bass",
+      "string": "String"
+    },
+    "status": {
+      "very_low": "Very Flat",
+      "low": "Flat",
+      "near_in_tune": "Near In Tune",
+      "in_tune": "In Tune",
+      "near_sharp": "Near Sharp",
+      "sharp": "Sharp",
+      "very_sharp": "Very Sharp",
+      "waiting": "Play a string..."
+    },
+    "metrics": {
+      "cents": "Deviation",
+      "frequency": "Frequency",
+      "target": "Target note"
+    },
+    "instructions": {
+      "title": "Quick Instructions",
+      "step1": "Click 'Start Tuner' and grant permission to use the microphone.",
+      "step2": "Pluck a single string at a time. The tuner runs in automatic chromatic mode.",
+      "step3": "Watch the indicator: if it's on the left, the string is flat; if on the right, it is sharp.",
+      "step4": "Tighten or loosen the string until the center glows green and displays 'In Tune'."
+    }
+  }
+}

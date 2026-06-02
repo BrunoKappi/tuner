@@ -1,0 +1,54 @@
+{
+  "tuner": {
+    "title": "GuitarTune",
+    "subtitle": "Afinador Online de Alta Precisão",
+    "microphone": {
+      "start": "Iniciar Afinador",
+      "mute": "Silenciar Afinador",
+      "unmute": "Ativar Afinador",
+      "reset": "Reiniciar Afinador",
+      "denied": "Acesso Negado ao Microfone",
+      "denied_description": "Este afinador precisa de acesso ao microfone para identificar as notas tocadas.",
+      "try_again": "Tentar novamente",
+      "incompatible": "Navegador Incompatível",
+      "incompatible_description": "Seu navegador não suporta captura de áudio necessária para utilizar este afinador.",
+      "connecting": "Solicitando acesso ao microfone...",
+      "signals": {
+        "title": "Entrada",
+        "none": "Sem sinal",
+        "weak": "Sinal fraco",
+        "good": "Bom sinal"
+      }
+    },
+    "instruments": {
+      "title": "Selecione o Instrumento",
+      "chromatic": "Cromático",
+      "acoustic_guitar": "Violão",
+      "guitar": "Guitarra",
+      "bass": "Baixo",
+      "string": "Corda"
+    },
+    "status": {
+      "very_low": "Muito Baixo",
+      "low": "Baixo",
+      "near_in_tune": "Quase Afinado",
+      "in_tune": "Afinado",
+      "near_sharp": "Quase Alto",
+      "sharp": "Alto",
+      "very_sharp": "Muito Alto",
+      "waiting": "Toque uma corda..."
+    },
+    "metrics": {
+      "cents": "Desvio",
+      "frequency": "Frequência",
+      "target": "Nota ideal"
+    },
+    "instructions": {
+      "title": "Instruções Rápidas",
+      "step1": "Clique em 'Iniciar Afinador' e conceda a permissão de uso do microfone.",
+      "step2": "Toque uma única corda de cada vez. O afinador opera em modo cromático automático.",
+      "step3": "Observe a agulha: se estiver à esquerda a corda está frouxa (baixa); se à direita, está apertada (alta).",
+      "step4": "Aperte ou solte a corda até que o centro do arco acenda em verde e mostre 'Afinado'."
+    }
+  }
+}
