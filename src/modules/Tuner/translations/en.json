@@ -55,6 +55,15 @@
       "step2": "Pluck a single string at a time. The tuner runs in automatic chromatic mode.",
       "step3": "Watch the indicator: if it's on the left, the string is flat; if on the right, it is sharp.",
       "step4": "Tighten or loosen the string until the center glows green and displays 'In Tune'."
+    },
+    "creator": "bkappi.com",
+    "cookies": {
+      "text": "Bkappi Tuner uses browser local storage (localStorage) to save your instrument and layout preferences. We do not collect any personal or audio data.",
+      "accept": "Accept",
+      "info": "Learn more",
+      "modal_title": "Privacy & Cookies Policy",
+      "modal_text": "To guarantee the best user experience, Bkappi Tuner saves locally on your device your choice of instrument (Acoustic Guitar, Electric Guitar, Bass) and your preferred visualization (Needle, Speedometer, Strobe).\n\n🔒 **Your Privacy is Sacred:**\n• We do not use tracking or third-party cookies.\n• We do not collect, store, or transmit any audio data.\n• All audio signal processing is done 100% locally inside your browser via Web Audio API.\n\nBy accepting, you agree to the use of local storage strictly to save your tuner preferences.",
+      "close": "Close"
     }
   }
 }

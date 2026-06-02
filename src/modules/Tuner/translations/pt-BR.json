@@ -55,6 +55,15 @@
       "step2": "Toque uma única corda de cada vez. O afinador opera em modo cromático automático.",
       "step3": "Observe a agulha: se estiver à esquerda a corda está frouxa (baixa); se à direita, está apertada (alta).",
       "step4": "Aperte ou solte a corda até que o centro do arco acenda em verde e mostre 'Afinado'."
+    },
+    "creator": "bkappi.com",
+    "cookies": {
+      "text": "O Bkappi Tuner utiliza o armazenamento local do navegador (localStorage) para salvar suas preferências de instrumento e layout. Não coletamos nenhum dado pessoal ou de áudio.",
+      "accept": "Aceitar",
+      "info": "Saiba mais",
+      "modal_title": "Política de Privacidade e Cookies",
+      "modal_text": "Para garantir a melhor experiência de uso, o Bkappi Tuner salva localmente no seu dispositivo a sua escolha de instrumento (Violão, Guitarra, Baixo) e a sua visualização preferida (Agulha, Velocímetro, Estroboscópio).\n\n🔒 **Sua Privacidade é Sagrada:**\n• Não utilizamos cookies de rastreamento ou de terceiros.\n• Não coletamos, armazenamos ou transmitimos nenhum dado de áudio.\n• Todo o processamento de som é feito localmente no seu navegador via Web Audio API.\n\nAo aceitar, você concorda com o uso do armazenamento local estritamente para salvar suas preferências de afinador.",
+      "close": "Fechar"
     }
   }
 }
