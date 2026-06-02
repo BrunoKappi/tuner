@@ -14,6 +14,9 @@ export class AudioProcessor {
   // Suavização e estabilização de notas
   private smoothedFrequency: number | null = null;
   private noteHistory: number[] = [];
+  private lastStableNote: number | null = null;
+  private lastNoteChangeTime: number = 0;
+  private readonly NOTE_DEBOUNCE_MS = 120;
 
   constructor() {}
 
@@ -58,6 +61,8 @@ export class AudioProcessor {
       // Limpa dados de suavização e estabilização
       this.smoothedFrequency = null;
       this.noteHistory = [];
+      this.lastStableNote = null;
+      this.lastNoteChangeTime = 0;
     } catch (error: any) {
       this.cleanup();
       if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
@@ -123,11 +128,12 @@ export class AudioProcessor {
             this.smoothedFrequency = frequency;
           } else {
             const diffRatio = Math.abs(frequency - this.smoothedFrequency) / this.smoothedFrequency;
-            // Se houver troca de notas (> 1 semitom ou ~12% de frequência),
-            // redefinimos a suavização imediatamente para evitar inércia na agulha.
-            // Reset se houver mudança maior que 1 semitom (~5.9% de variação de frequência)
-            if (diffRatio > 0.05) {
-              this.smoothedFrequency = frequency;
+            if (diffRatio > AUDIO_CONFIG.frequencyResetThreshold) {
+              const now = performance.now();
+              if (now - this.lastNoteChangeTime > this.NOTE_DEBOUNCE_MS) {
+                this.smoothedFrequency = frequency;
+                this.lastNoteChangeTime = now;
+              }
             } else {
               this.smoothedFrequency =
                 AUDIO_CONFIG.smoothingFactor * frequency +
@@ -138,7 +144,6 @@ export class AudioProcessor {
           const pitchData = this.parsePitch(this.smoothedFrequency, clarity, rms);
           onPitchDetected(pitchData, rms);
         } else {
-          // Sinal detectado mas sem clareza suficiente (sem harmônico definido)
           onPitchDetected(null, rms);
         }
       }
@@ -171,9 +176,8 @@ export class AudioProcessor {
     const n = 12 * Math.log2(frequency / 440) + 69;
     const rawMidiNote = Math.round(n);
     
-    // Filtro por Moda: Empilha as últimas 9 notas no histórico para amenizar oscilações transientes
     this.noteHistory.push(rawMidiNote);
-    if (this.noteHistory.length > 9) {
+    if (this.noteHistory.length > AUDIO_CONFIG.noteHistorySize) {
       this.noteHistory.shift();
     }
 
@@ -236,6 +240,8 @@ export class AudioProcessor {
     this.inputBuffer = null;
     this.smoothedFrequency = null;
     this.noteHistory = [];
+    this.lastStableNote = null;
+    this.lastNoteChangeTime = 0;
   }
 }
 export default AudioProcessor;

@@ -46,12 +46,14 @@ export const INSTRUMENTS: Instrument[] = [
 
 export const AUDIO_CONFIG = {
   fftSize: 2048,
-  clarityThreshold: 0.85,
+  clarityThreshold: 0.88,
   rmsThresholds: {
-    none: 0.001, // Baixado de 0.003 para detecção instantânea de vibrações muito silenciosas
-    weak: 0.005, // Baixado de 0.012 para resposta superior a sons suaves no celular
+    none: 0.005,
+    weak: 0.015,
   },
-  smoothingFactor: 0.08, // Média móvel exponencial mais forte para agulha suave
+  smoothingFactor: 0.18,
+  noteHistorySize: 12,
+  frequencyResetThreshold: 0.08,
 };
 
 export const getTuningStatus = (cents: number): TuningStatus => {
