@@ -308,11 +308,11 @@ export const TunerMeter: React.FC<TunerMeterProps> = ({ cents, status, isActive,
       {/* Rótulo e Cents Desvio */}
       <div className="mt-3 flex items-center justify-center h-6 select-none">
         {isActive && cents !== undefined ? (
-          <span className={`font-mono text-sm tracking-tight ${getStatusTextClass()}`}>
+          <span className={`font-mono text-xs tracking-tight ${getStatusTextClass()}`}>
             {cents > 0 ? `+${cents}` : cents} cents
           </span>
         ) : (
-          <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-tunerDark-muted">
+          <span className="text-[8px] font-black uppercase tracking-widest text-slate-400 dark:text-tunerDark-muted">
             -- cents
           </span>
         )}

@@ -6,6 +6,7 @@ import {
   setMuted,
   setLayout,
   setTheme,
+  dismissInstructions,
 } from '../store/Tuner.Slice';
 import type { PitchData, SignalLevel } from '../types/Tuner.Types';
 import AudioProcessor from '../services/Tuner.AudioProcessor';
@@ -19,6 +20,7 @@ export const useTuner = () => {
   const isMuted = useSelector((state: RootState) => state.tuner.isMuted);
   const selectedLayout = useSelector((state: RootState) => state.tuner.selectedLayout);
   const selectedTheme = useSelector((state: RootState) => state.tuner.selectedTheme);
+  const showInstructions = useSelector((state: RootState) => state.tuner.showInstructions);
 
   // Referência persistente e isolada do processador Web Audio
   const processorRef = useRef<AudioProcessor | null>(null);
@@ -108,6 +110,10 @@ export const useTuner = () => {
     dispatch(setTheme(theme));
   };
 
+  const closeInstructions = () => {
+    dispatch(dismissInstructions());
+  };
+
   // Garante liberação de hardware de áudio ao desmontar a página
   useEffect(() => {
     return () => {
@@ -165,12 +171,14 @@ export const useTuner = () => {
     isMuted,
     selectedLayout,
     selectedTheme,
+    showInstructions,
     signalLevel: getSignalLevel(),
     startTuner,
     toggleMute,
     restartTuner,
     changeLayout,
     changeTheme,
+    closeInstructions,
   };
 };
 

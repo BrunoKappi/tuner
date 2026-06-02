@@ -18,10 +18,10 @@ export const TunerCard: React.FC = () => {
     isMuted,
     selectedLayout,
     selectedTheme,
+    showInstructions,
     signalLevel,
     startTuner,
     toggleMute,
-    restartTuner,
     changeLayout,
     changeTheme,
   } = useTuner();
@@ -51,14 +51,18 @@ export const TunerCard: React.FC = () => {
     }
   }, []);
 
-  // Monitora e aplica a classe de tema claro/escuro no nó root html
+  // Monitora e aplica a classe de tema claro/escuro nos nós html e body
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const root = window.document.documentElement;
+      const html = window.document.documentElement;
+      const body = window.document.body;
+      console.log('Bkappi Tuner Theme toggled to:', selectedTheme);
       if (selectedTheme === 'dark') {
-        root.classList.add('dark');
+        html.classList.add('dark');
+        body.classList.add('dark');
       } else {
-        root.classList.remove('dark');
+        html.classList.remove('dark');
+        body.classList.remove('dark');
       }
     }
   }, [selectedTheme]);
@@ -207,7 +211,7 @@ export const TunerCard: React.FC = () => {
                             className={`w-full py-2.5 px-3 rounded-xl flex items-center justify-center border transition-all duration-300 select-none focus:outline-none ${
                               isSel
                                 ? 'bg-tunerState-success/10 border-tunerState-success text-tunerState-success shadow-[0_0_15px_rgba(16,185,129,0.08)]'
-                                : 'bg-slate-100/55 hover:bg-slate-100 dark:bg-slate-800/40 border-slate-250 dark:border-slate-700/60 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-tunerDark-text hover:border-slate-350 dark:hover:border-slate-650'
+                                : 'bg-slate-100/70 border-slate-200 text-slate-500 hover:bg-slate-200 hover:text-slate-900 dark:bg-slate-800/40 dark:border-slate-700/60 dark:text-slate-400 dark:hover:bg-slate-800/80 dark:hover:text-white dark:hover:border-slate-650'
                             }`}
                             aria-label={t(`tuner.layouts.${lay}`)}
                           >
@@ -250,12 +254,11 @@ export const TunerCard: React.FC = () => {
                 layout={selectedLayout}
               />
 
-              {/* Botões silenciar e resetar */}
+              {/* Botões silenciar */}
               <TunerControls
                 isMuted={isMuted}
                 isActive={true}
                 onToggleMute={toggleMute}
-                onRestart={restartTuner}
               />
             </div>
           </div>
@@ -304,7 +307,7 @@ export const TunerCard: React.FC = () => {
       </main>
 
       {/* Manual de Instruções e Fluxo */}
-      <TunerQuickInstructions />
+      {showInstructions && <TunerQuickInstructions />}
 
       {/* --- AVISO DE COOKIES / LOCAL STORAGE --- */}
       {showCookieBanner && (

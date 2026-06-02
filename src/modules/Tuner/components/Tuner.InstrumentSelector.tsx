@@ -41,10 +41,10 @@ export const TunerInstrumentSelector: React.FC<TunerInstrumentSelectorProps> = (
             <button
               key={inst.key}
               onClick={() => dispatch(setInstrument(inst.key))}
-              className={`group flex items-center justify-center md:justify-start gap-2 py-2.5 px-3 rounded-xl font-bold text-[10px] md:text-xs border transition-all duration-300 select-none focus:outline-none ${
+              className={`group flex items-center justify-center md:justify-start gap-2 py-2 px-3 rounded-xl font-black text-[9px] md:text-[10px] border transition-all duration-300 select-none focus:outline-none ${
                 isSelected
                   ? 'bg-tunerState-success/10 border-tunerState-success text-tunerState-success shadow-[0_0_15px_rgba(16,185,129,0.08)]'
-                  : 'bg-slate-100/70 border-slate-200/60 text-slate-600 hover:bg-slate-200/50 hover:text-slate-950 dark:bg-slate-800/40 dark:border-slate-700/60 dark:text-slate-450 dark:hover:text-white dark:hover:border-slate-600'
+                  : 'bg-slate-100/70 border-slate-200/60 text-slate-500 hover:bg-slate-200 hover:text-slate-900 dark:bg-slate-800/40 dark:border-slate-700/60 dark:text-slate-400 dark:hover:bg-slate-800/80 dark:hover:text-white dark:hover:border-slate-600'
               }`}
             >
               <span className="flex-shrink-0">{getIcon(inst.key)}</span>
