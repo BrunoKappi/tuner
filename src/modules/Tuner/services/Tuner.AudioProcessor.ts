@@ -14,9 +14,14 @@ export class AudioProcessor {
   // Suavização e estabilização de notas
   private smoothedFrequency: number | null = null;
   private noteHistory: number[] = [];
-  private lastStableNote: number | null = null;
   private lastNoteChangeTime: number = 0;
   private readonly NOTE_DEBOUNCE_MS = 120;
+
+  // Histerese e persistência da agulha para evitar flickering
+  private lastValidPitchData: PitchData | null = null;
+  private lastValidTime: number = 0;
+  private readonly SILENCE_HOLD_MS = 400; // Tempo segurando a nota no silêncio (ms)
+  private readonly UNCLEAR_HOLD_MS = 800; // Tempo segurando se houver som mas com clareza baixa (ms)
 
   constructor() {}
 
@@ -33,6 +38,9 @@ export class AudioProcessor {
    * Inicializa o dispositivo de áudio local
    */
   public async init(): Promise<void> {
+    // Evita múltiplas inicializações concorrentes limpando recursos anteriores
+    this.cleanup();
+
     if (!AudioProcessor.isSupported()) {
       throw new Error('NOT_SUPPORTED');
     }
@@ -44,7 +52,7 @@ export class AudioProcessor {
         audio: {
           echoCancellation: false, // Desabilitado para evitar cancelamentos de fase de cordas de violão/guitarra
           noiseSuppression: false, // Desabilitado para evitar portas de ruído que abafam sons acústicos contínuos
-          autoGainControl: true,   // Habilitado para aumentar a sensibilidade de sons mais baixos em celulares
+          autoGainControl: false,  // Desabilitado para evitar que o ganho automático amplifique ruídos em celulares
         },
       });
 
@@ -58,11 +66,12 @@ export class AudioProcessor {
       this.detector = PitchDetector.forFloat32Array(this.analyserNode.fftSize);
       this.inputBuffer = new Float32Array(this.detector.inputLength);
       
-      // Limpa dados de suavização e estabilização
+      // Limpa dados de suavização, estabilização e histerese
       this.smoothedFrequency = null;
       this.noteHistory = [];
-      this.lastStableNote = null;
       this.lastNoteChangeTime = 0;
+      this.lastValidPitchData = null;
+      this.lastValidTime = 0;
     } catch (error: any) {
       this.cleanup();
       if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
@@ -96,6 +105,9 @@ export class AudioProcessor {
    * Inicia o loop de animação analisando o microfone
    */
   public startAnalysis(onPitchDetected: (data: PitchData | null, rms: number) => void): void {
+    // Evita múltiplos loops concorrentes limpando frame anterior se houver
+    this.stopAnalysis();
+
     if (!this.analyserNode || !this.detector || !this.inputBuffer || !this.audioContext) {
       return;
     }
@@ -110,11 +122,9 @@ export class AudioProcessor {
       const rms = this.calculateRMS(this.inputBuffer);
       const signalLevel = this.getSignalLevel(rms);
 
-      if (signalLevel === 'none') {
-        // Sinal insignificante (silêncio)
-        this.smoothedFrequency = null;
-        onPitchDetected(null, rms);
-      } else {
+      let detectedPitchData: PitchData | null = null;
+
+      if (signalLevel !== 'none') {
         const [rawFrequency, clarity] = this.detector.findPitch(
           this.inputBuffer as any,
           this.audioContext.sampleRate
@@ -141,9 +151,29 @@ export class AudioProcessor {
             }
           }
 
-          const pitchData = this.parsePitch(this.smoothedFrequency, clarity, rms);
-          onPitchDetected(pitchData, rms);
+          detectedPitchData = this.parsePitch(this.smoothedFrequency, clarity, rms);
+        }
+      }
+
+      if (detectedPitchData) {
+        this.lastValidPitchData = detectedPitchData;
+        this.lastValidTime = performance.now();
+        onPitchDetected(detectedPitchData, rms);
+      } else {
+        const now = performance.now();
+        const timeSinceLastValid = now - this.lastValidTime;
+        const holdLimit = (signalLevel === 'none') ? this.SILENCE_HOLD_MS : this.UNCLEAR_HOLD_MS;
+
+        if (this.lastValidPitchData && timeSinceLastValid < holdLimit) {
+          // Mantém a última leitura válida mas com o RMS atual
+          const heldPitchData = {
+            ...this.lastValidPitchData,
+            rms: rms,
+          };
+          onPitchDetected(heldPitchData, rms);
         } else {
+          this.smoothedFrequency = null;
+          this.lastValidPitchData = null;
           onPitchDetected(null, rms);
         }
       }
@@ -240,8 +270,9 @@ export class AudioProcessor {
     this.inputBuffer = null;
     this.smoothedFrequency = null;
     this.noteHistory = [];
-    this.lastStableNote = null;
     this.lastNoteChangeTime = 0;
+    this.lastValidPitchData = null;
+    this.lastValidTime = 0;
   }
 }
 export default AudioProcessor;

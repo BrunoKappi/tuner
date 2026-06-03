@@ -45,11 +45,11 @@ export const INSTRUMENTS: Instrument[] = [
 ];
 
 export const AUDIO_CONFIG = {
-  fftSize: 2048,
-  clarityThreshold: 0.88,
+  fftSize: 4096,
+  clarityThreshold: 0.85,
   rmsThresholds: {
-    none: 0.005,
-    weak: 0.015,
+    none: 0.002,
+    weak: 0.010,
   },
   smoothingFactor: 0.18,
   noteHistorySize: 12,
