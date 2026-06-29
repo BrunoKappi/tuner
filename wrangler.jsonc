@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tuner",
+  "name": "tuner-app",
   "compatibility_date": "2026-06-26",
   "assets": {
     "directory": "./dist"
