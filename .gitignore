@@ -27,3 +27,15 @@ graphify-out/
 
 # AI database
 kb_database.md
+
+# Automatically added agent and env ignores
+.env
+.agents/
+.env.development
+.env.production
+.antigravityignore
+.graphifyignore
+.geminiignore
+.claudeignore
+agentsIgnore
+configFiles
